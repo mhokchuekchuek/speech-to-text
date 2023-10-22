@@ -14,7 +14,7 @@ This python library use [Wav2Vec2](https://huggingface.co/docs/transformers/mode
 from speech_to_text.usecase.engine import SpeechToTextEngine
 import torchaudio
 # init wave tensor
-wave_tensor, simple_rate = torchaudio.load("sample1.flac")
+wave_tensor, simple_rate = torchaudio.load("PATH TO SPEECH FILE")
 
 engine = SpeechToTextEngine(model_path="PATH TO MODEL", preprocess_path="PATH TO PREPROCESS")
 engine.get_text_from_speech(wave_tensor)
