@@ -8,10 +8,14 @@ def read_requirements(path: str) -> list:
 
 base_requirements = read_requirements("requirements.txt")
 
+with open("readme.md", "r") as readme_file:
+    long_description = readme_file.read()
 
 setup(
     name="speech-to-text",
     version="0.0.1",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=find_packages(include=["speech_to_text.*"]),
     python_requires=">=3.9",
     install_requires=base_requirements,
