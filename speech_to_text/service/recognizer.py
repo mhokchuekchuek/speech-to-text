@@ -16,9 +16,12 @@ class RecognizerService:
     def _load_preprocess(self, preprocess_path: str):
         return Wav2Vec2Processor.from_pretrained(preprocess_path)
 
-    def _preprocess(self, wave_tensor: torch.Tensor) -> torch.Tensor:
+    def _preprocess(self, wave_tensor: torch.Tensor, simple_rate: int) -> torch.Tensor:
         return self.preprocess(
-            wave_tensor, return_tensors="pt", padding="longest"
+            wave_tensor,
+            sampling_rate=simple_rate,
+            return_tensors="pt",
+            padding="longest",
         ).input_values
 
     def _inference(self, wave_tensor: torch.Tensor) -> torch.Tensor:
@@ -30,7 +33,7 @@ class RecognizerService:
         prediction_ids = torch.argmax(logits, dim=-1)
         return self.preprocess.batch_decode(prediction_ids)
 
-    def recognize(self, wave_tensor: torch.Tensor) -> torch.Tensor:
-        preprocessed_tensor = self._preprocess(wave_tensor)
+    def recognize(self, wave_tensor: torch.Tensor, simple_rate: int) -> torch.Tensor:
+        preprocessed_tensor = self._preprocess(wave_tensor, simple_rate)
         inferenced_tensor = self._inference(preprocessed_tensor)
         return self._postprocess(inferenced_tensor)

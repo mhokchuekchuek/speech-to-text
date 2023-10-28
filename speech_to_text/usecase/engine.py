@@ -12,5 +12,9 @@ class SpeechToTextEngine:
             model_path=model_path, preprocess_path=preprocess_path, device=device
         )
 
-    def get_text_from_speech(self, wave_tensor: torch.Tensor) -> List[str]:
-        return self.recognizer.recognize(wave_tensor=wave_tensor)
+    def get_text_from_speech(
+        self, wave_tensor: torch.Tensor, simple_rate: int
+    ) -> List[str]:
+        return self.recognizer.recognize(
+            wave_tensor=wave_tensor, simple_rate=simple_rate
+        )
